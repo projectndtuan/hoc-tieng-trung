@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Flashcard Tiếng Trung</title>
+    <link rel="stylesheet" href="TiengTrung.css">
+</head>
+
+<body>
+    <div class="container">
+        <header>
+            <h1>Bảng Ghi Nhớ Từ Vựng Tiếng Trung</h1>
+            <p class="subtitle">Học từ vựng hiệu quả với phương pháp flashcard</p>
+        </header>
+
+        <div class="mode-toggle">
+            <button id="reverse-mode-btn" class="mode-btn">Chế độ thường</button>
+            <button id="chinese-only-btn" class="mode-btn">Chỉ chữ Hán</button>
+        </div>
+
+        <div class="progress-container">
+            <div class="progress-info">
+                <span id="progress-text">Thẻ 1/99</span>
+                <span id="stats">Đã biết: 0 | Cần ôn: 0 | Chưa biết: 99</span>
+            </div>
+            <div class="progress-bar">
+                <div class="progress" id="progress-bar"></div>
+            </div>
+        </div>
+
+        <div class="flashcard" id="flashcard">
+            <div class="card-inner">
+                <div class="card-front">
+                    <div class="chinese-char" id="chinese-char">你</div>
+                    <div class="pinyin" id="pinyin">nǐ</div>
+                    <button class="show-meaning-btn" id="show-meaning">Hiện nghĩa</button>
+                </div>
+                <div class="card-back">
+                    <div class="meaning" id="meaning">bạn</div>
+                    <div class="category" id="category">Đại từ & nhân xưng</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="controls">
+            <div class="difficulty-buttons">
+                <p>Bạn có nhớ từ này không?</p>
+                <div>
+                    <button class="difficulty-btn hard" data-difficulty="hard">Chưa biết</button>
+                    <button class="difficulty-btn medium" data-difficulty="medium">Cần ôn</button>
+                    <button class="difficulty-btn easy" data-difficulty="easy">Đã biết</button>
+                </div>
+            </div>
+
+            <div class="navigation-buttons">
+                <button id="prev-btn" class="nav-btn">Thẻ trước</button>
+                <button id="next-btn" class="nav-btn">Thẻ tiếp theo</button>
+            </div>
+
+            <div class="filters">
+                <div class="category-filter">
+                    <label for="category-select">Lọc theo danh mục:</label>
+                    <select id="category-select">
+                        <option value="all">Tất cả danh mục</option>
+                        <option value="1">Đại từ & nhân xưng</option>
+                        <option value="2">Động từ & trợ động từ</option>
+                        <option value="3">Nghề nghiệp & quan hệ</option>
+                        <option value="4">Quốc gia & dân tộc</option>
+                        <option value="5">Ngôn ngữ & chữ viết</option>
+                        <option value="6">Thời gian & số đếm</option>
+                        <option value="7">Thức ăn & đồ uống</option>
+                        <option value="8">Từ khác</option>
+                    </select>
+                </div>
+
+                <div class="part-filter">
+                    <label for="part-select">Lọc theo part:</label>
+                    <select id="part-select">
+                        <option value="all">Tất cả part</option>
+                        <option value="1">Part 1</option>
+                        <option value="2">Part 2</option>
+                        <option value="3">Part 3</option>
+                    </select>
+                </div>
+            </div>
+
+            <button id="shuffle-btn" class="shuffle-btn">Xáo trộn thẻ</button>
+        </div>
+    </div>
+
+    <script src="DaTaTiengTrung.js"></script>
+    <script src="TiengTrung.js"></script>
+</body>
+
+</html>
