@@ -115,6 +115,12 @@ const vocabularyData = [
   { chinese: "打算", pinyin: "dǎsuàn", meaning: "dự định, tính toán", category: "2", part: "3" },
   { chinese: "着急", pinyin: "zháojí", meaning: "sốt ruột, lo lắng", category: "2", part: "3" },
   { chinese: "拿", pinyin: "ná", meaning: "cầm, lấy", category: "2", part: "3" },
+  { chinese: "听说", pinyin: "tīngshuō", meaning: "nghe nói", category: "2", part: "3" },
+  { chinese: "赚", pinyin: "zhuàn", meaning: "kiếm (tiền)", category: "2", part: "3" },
+  { chinese: "结婚", pinyin: "jiéhūn", meaning: "kết hôn, cưới", category: "2", part: "3" },
+  { chinese: "愿意", pinyin: "yuànyì", meaning: "đồng ý, sẵn lòng", category: "2", part: "3" },
+  { chinese: "离开", pinyin: "líkāi", meaning: "rời khỏi", category: "2", part: "3" },
+  { chinese: "满意", pinyin: "mǎnyì", meaning: "hài lòng", category: "2", part: "3" },
 
   // 3. Nghề nghiệp & quan hệ 
   { chinese: "学生", pinyin: "xuésheng", meaning: "học sinh", category: "3", part: "1" },
@@ -211,6 +217,8 @@ const vocabularyData = [
   { chinese: "元", pinyin: "yuán", meaning: "đồng (đơn vị tiền tệ)", category: "6", part: "3" },
   { chinese: "角", pinyin: "jiǎo", meaning: "hào (0.1 tệ)", category: "6", part: "3" },
   { chinese: "一共", pinyin: "yígòng", meaning: "tổng cộng", category: "6", part: "3" },
+  { chinese: "季节", pinyin: "jìjié", meaning: "mùa", category: "6", part: "3" },
+  { chinese: "周末", pinyin: "zhōumò", meaning: "cuối tuần", category: "6", part: "3" },
 
   // 7. Thức ăn & đồ uống
   { chinese: "饭", pinyin: "fàn", meaning: "cơm", category: "7", part: "1" },
@@ -339,6 +347,10 @@ const vocabularyData = [
   { chinese: "盘子", pinyin: "pánzi", meaning: "cái đĩa, mâm", category: "9", part: "3" },
   { chinese: "碗", pinyin: "wǎn", meaning: "cái bát, chén", category: "9", part: "3" },
   { chinese: "音乐", pinyin: "yīnyuè", meaning: "âm nhạc", category: "9", part: "3" },
+  { chinese: "船", pinyin: "chuán", meaning: "thuyền, tàu", category: "9", part: "3" },
+  { chinese: "岛", pinyin: "dǎo", meaning: "hòn đảo", category: "9", part: "3" },
+  { chinese: "月亮", pinyin: "yuèliang", meaning: "mặt trăng", category: "9", part: "3" },
+  { chinese: "游戏", pinyin: "yóuxì", meaning: "trò chơi", category: "9", part: "3" },
 
   // 10. Từ khác
   { chinese: "好", pinyin: "hǎo", meaning: "tốt, khỏe", category: "10", part: "1" },
@@ -501,6 +513,11 @@ const vocabularyData = [
   { chinese: "只", pinyin: "zhǐ", meaning: "chỉ", category: "10", part: "3" },
   { chinese: "新鲜", pinyin: "xīnxiān", meaning: "tươi, mới", category: "10", part: "3" },
   { chinese: "经常", pinyin: "jīngcháng", meaning: "thường xuyên", category: "10", part: "3" },
+  { chinese: "刮风", pinyin: "guāfēng", meaning: "gió thổi", category: "10", part: "3" },
+  { chinese: "爱好", pinyin: "àihào", meaning: "sở thích", category: "10", part: "3" },
+  { chinese: "水平", pinyin: "shuǐpíng", meaning: "trình độ, mức độ", category: "10", part: "3" },
+  { chinese: "不但...而且", pinyin: "búdàn... érqiě", meaning: "không những... mà còn...", category: "10", part: "3" },
+  { chinese: "为了", pinyin: "wèile", meaning: "vì, để", category: "10", part: "3" },
 ];
 
 // Tên danh mục
