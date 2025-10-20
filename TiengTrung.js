@@ -1,7 +1,9 @@
 // Biến toàn cục
 let currentCardIndex = 0;
-let filteredCards = [...vocabularyData];
-let cardStatus = Array(vocabularyData.length).fill(0); // 0: chưa biết, 1: cần ôn, 2: đã biết
+let currentDataSource = "full"; // "full" hoặc "simple"
+let vocabularyData = [...vocabularyDataFull]; // Dữ liệu hiện tại
+let filteredCards = [...vocabularyDataFull];
+let cardStatus = Array(vocabularyDataFull.length).fill(0); // 0: chưa biết, 1: cần ôn, 2: đã biết
 let isShuffled = false;
 let isReverseMode = false;     // false: hiện từ, true: hiện nghĩa trước
 let isChineseOnlyMode = false; // chỉ hiện chữ Hán
@@ -24,6 +26,7 @@ const difficultyButtons = document.querySelectorAll('.difficulty-btn');
 const shuffleButton = document.getElementById('shuffle-btn');
 const reverseModeButton = document.getElementById('reverse-mode-btn');
 const chineseOnlyButton = document.getElementById('chinese-only-btn');
+const switchDataButton = document.getElementById('switch-data-btn');
 
 // Khởi tạo ứng dụng
 function initApp() {
@@ -34,16 +37,26 @@ function initApp() {
 
 // Hiển thị thẻ
 function showCard(index) {
-    if (filteredCards.length === 0) return;
+    if (filteredCards.length === 0) {
+        chineseCharElement.textContent = "Không có thẻ";
+        pinyinElement.textContent = "";
+        meaningElement.textContent = "Vui lòng chọn bộ lọc khác";
+        categoryElement.textContent = "";
+        progressTextElement.textContent = `Thẻ 0/0`;
+        progressBarElement.style.width = `0%`;
+        prevButton.disabled = true;
+        nextButton.disabled = true;
+        return;
+    }
+
     const card = filteredCards[index];
 
     if (isChineseOnlyMode) {
         // Chỉ chữ Hán
         chineseCharElement.textContent = card.chinese;
         pinyinElement.textContent = "";
-        meaningElement.textContent = card.pinyin + " - " + card.meaning; // hiện pinyin + nghĩa ở mặt sau
+        meaningElement.textContent = card.pinyin + " - " + card.meaning;
         categoryElement.textContent = categoryNames[card.category];
-
         flashcardElement.classList.remove('reversed');
 
     } else if (isReverseMode) {
@@ -120,10 +133,52 @@ function sortCards() {
 // Chuyển chế độ
 function toggleReverseMode() {
     isReverseMode = !isReverseMode;
-    isChineseOnlyMode = false; // tắt nếu đang bật
+    isChineseOnlyMode = false;
     reverseModeButton.textContent = isReverseMode ? "Chế độ đảo ngược (ON)" : "Chế độ thường";
     chineseOnlyButton.textContent = "Chỉ chữ Hán";
     showCard(currentCardIndex);
+}
+
+// Chuyển chế độ chỉ chữ Hán
+function toggleChineseOnlyMode() {
+    isChineseOnlyMode = !isChineseOnlyMode;
+    isReverseMode = false;
+    chineseOnlyButton.textContent = isChineseOnlyMode ? "Chỉ chữ Hán (ON)" : "Chỉ chữ Hán";
+    reverseModeButton.textContent = "Chế độ thường";
+    showCard(currentCardIndex);
+}
+
+// Chuyển đổi dữ liệu
+function switchDataSource() {
+    if (currentDataSource === "full") {
+        // Chuyển sang dữ liệu đơn giản
+        currentDataSource = "simple";
+        vocabularyData = [...vocabularyDataSimple];
+        switchDataButton.textContent = "Dữ liệu: Đơn giản";
+    } else {
+        // Chuyển sang dữ liệu đầy đủ
+        currentDataSource = "full";
+        vocabularyData = [...vocabularyDataFull];
+        switchDataButton.textContent = "Dữ liệu: Đầy đủ";
+    }
+    
+    // Reset các trạng thái
+    currentCardIndex = 0;
+    cardStatus = Array(vocabularyData.length).fill(0);
+    isShuffled = false;
+    
+    // Áp dụng bộ lọc hiện tại
+    filterCards();
+    updateStats();
+}
+
+// Tìm index gốc trong vocabularyData
+function findOriginalIndex(card) {
+    return vocabularyData.findIndex(item => 
+        item.chinese === card.chinese && 
+        item.pinyin === card.pinyin && 
+        item.meaning === card.meaning
+    );
 }
 
 // Thiết lập sự kiện
@@ -145,6 +200,7 @@ function setupEventListeners() {
             showCard(currentCardIndex);
         }
     });
+
     nextButton.addEventListener('click', () => {
         if (currentCardIndex < filteredCards.length - 1) {
             currentCardIndex++;
@@ -156,18 +212,19 @@ function setupEventListeners() {
     difficultyButtons.forEach(button => {
         button.addEventListener('click', (e) => {
             const difficulty = e.target.dataset.difficulty;
-            const originalIndex = vocabularyData.findIndex(
-                card => card.chinese === filteredCards[currentCardIndex].chinese
-            );
+            const currentCard = filteredCards[currentCardIndex];
+            const originalIndex = findOriginalIndex(currentCard);
+
+            if (originalIndex === -1) return;
 
             if (difficulty === 'easy') {
                 cardStatus[originalIndex] = 2;
                 if (isReverseMode) {
-                    const card = filteredCards[currentCardIndex];
-                    chineseCharElement.textContent = card.chinese;
-                    pinyinElement.textContent = card.pinyin;
+                    chineseCharElement.textContent = currentCard.chinese;
+                    pinyinElement.textContent = currentCard.pinyin;
                 }
                 flashcardElement.classList.add('flipped');
+                
                 setTimeout(() => {
                     flashcardElement.classList.remove('flipped');
                     setTimeout(() => {
@@ -180,6 +237,7 @@ function setupEventListeners() {
                         }
                     }, 300);
                 }, 1000);
+
             } else if (difficulty === 'medium') {
                 cardStatus[originalIndex] = 1;
                 if (currentCardIndex < filteredCards.length - 1) {
@@ -214,13 +272,10 @@ function setupEventListeners() {
     reverseModeButton.addEventListener('click', toggleReverseMode);
 
     // Chế độ chỉ chữ Hán
-    chineseOnlyButton.addEventListener('click', () => {
-        isChineseOnlyMode = !isChineseOnlyMode;
-        isReverseMode = false; // tắt nếu đang bật
-        chineseOnlyButton.textContent = isChineseOnlyMode ? "Chỉ chữ Hán (ON)" : "Chỉ chữ Hán";
-        reverseModeButton.textContent = "Chế độ thường";
-        showCard(currentCardIndex);
-    });
+    chineseOnlyButton.addEventListener('click', toggleChineseOnlyMode);
+
+    // Chuyển đổi dữ liệu
+    switchDataButton.addEventListener('click', switchDataSource);
 }
 
 // Khởi chạy
